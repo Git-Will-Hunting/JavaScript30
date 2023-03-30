@@ -97,6 +97,34 @@
   </div>
 
 <script>
+  // create a nodelist of checkboxes
+  const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+
+  // save first checkbox clicked to variable
+  let lastChecked;
+
+  function handleCheck(e){
+    let inBetween = false;
+
+    // check for shift key
+    if(e.shiftKey && this.checked){
+      checkboxes.forEach(checkbox =>{
+
+        if(checkbox === this || checkbox === lastChecked){
+          inBetween = !inBetween;
+        };
+        if(inBetween){
+          checkbox.checked = true;
+        }
+      }); 
+
+    };
+  
+    // update last checkbox
+    lastChecked = this;
+  };
+  checkboxes.forEach(input => input.addEventListener('click', handleCheck));
+
 </script>
 </body>
 </html>
