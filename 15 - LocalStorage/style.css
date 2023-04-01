@@ -79,3 +79,20 @@ h2 {
   outline: 0;
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+.bulk {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 15px;
+}
+
+.bulk > button {
+  padding: 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.clearAll {
+  background-color: #ff3a3a;
+}
