@@ -6,6 +6,8 @@
   <link rel="icon" href="https://fav.farm/🔥" />
 </head>
 <body>
+  <div class="total">
+  </div>  
   <ul class="videos">
     <li data-time="5:43">
       Video 1
@@ -183,6 +185,37 @@
     </li>
   </ul>
 <script>
+  const timeNodes = Array.from(document.querySelectorAll('[data-time]'));
+
+  const videoTimes = timeNodes
+  .map(node => node.dataset.time)
+  .map(timeCode => {
+    const [mins, secs] = timeCode.split(':')
+    .map(parseFloat);
+    return (mins * 60) + secs
+  })
+  
+  const seconds = timeNodes
+  .map(node => node.dataset.time)
+  .map(timeCode => {
+    const [mins, secs] = timeCode.split(':')
+    .map(parseFloat);
+    return (mins * 60) + secs
+  })
+  .reduce((total, vidSeconds) => total + vidSeconds);
+
+  let secondsLeft = seconds;
+  const hours = Math.floor(secondsLeft / 3600);
+  secondsLeft = secondsLeft % 3600;
+  mins = Math.floor(secondsLeft / 60);
+  secondsLeft = secondsLeft % 60;
+
+  const timeString = (hours + ' hours ' + mins + ' minutes ' + secondsLeft + ' and seconds')
+  
+  const totalTime = document.querySelector('.total')
+totalTime.innerHTML = `The total time for the videos is ${timeString} <br>
+To view the video times call "videoTimes" in the console`
+
 </script>
 </body>
 </html>
