@@ -47,7 +47,41 @@
   <ul id="bands"></ul>
 
 <script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil',
+ 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans',
+ 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+
+//function removeArticles(arr){
+//  const cleanArray = []
+//  const articles = ['An ', 'A ', 'The '];
+//  for (let string of arr) {
+//    let stringCleaned = string;
+//    for (let article of articles) {
+//      while (stringCleaned.startsWith(article)) {
+//        stringCleaned = stringCleaned.substring(article.length);
+//      }
+//    }
+//    cleanArray.push(stringCleaned.trim())
+//  }
+//
+//  return cleanArray;
+//}
+
+function strip(cleanString){
+  return cleanString.replace(/^(a |the |an )/i, '').trim();
+}
+
+// const bandsCleaned = removeArticles(bands)
+const sortedBands = bands.sort((a,b) =>
+(strip(a) > strip(b)) ? 1 : -1);
+//console.log(sortedBands);
+console.log(bands);
+
+const bandList = document.querySelector('#bands').innerHTML = 
+sortedBands
+.map(band => `<li>${band}</li>`)
+.join('');
+
 
 
 </script>
