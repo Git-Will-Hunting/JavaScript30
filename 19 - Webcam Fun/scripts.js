@@ -51,7 +51,7 @@ function paintToCanvas() {
         } else if (currentFilter === 'greenScreen') {
             pixels = greenScreen(pixels);
         } else if (currentFilter === 'noFilter') {
-            pixels = ctx.getImageData(0, 0, width, height)
+            pixels = noFilter(pixels, lastFilter);
         }
         // put them back
         ctx.putImageData(pixels, 0, 0);
@@ -131,6 +131,7 @@ function noFilter(pixels, lastFilter) {
             pixels.data[i + 600] = pixels.data[i + 2]; // Blue
         }
     } else if (lastFilter === 'greenScreen'){
+        // Reverse green screen
         for (i = 0; i <pixels.data.length; i+=4) {
             pixels.data[i + 3] = 255;
     }
