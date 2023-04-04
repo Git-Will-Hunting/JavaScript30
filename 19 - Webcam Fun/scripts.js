@@ -39,7 +39,7 @@ function noFilter(pixels, lastFilter) {
         for(let i = 0; i <pixels.data.length; i+=4) {
             pixels.data[i +0] = pixels.data[i + 0] - 100; // Red
             pixels.data[i +1] = pixels.data[i + 1] + 50; // Green
-            pixels.data[i +2] = pixels.data[i + 2] / 0.5; // Blue
+            pixels.data[i +2] = pixels.data[i + 2] * 2; // Blue
         }
     } else if (lastFilter === 'rgbSplit') {
         // Reverse rgbSplit
