@@ -3,6 +3,10 @@ const canvas = document.querySelector('.photo');
 const ctx = canvas.getContext('2d');
 const strip = document.querySelector('.strip');
 const snap = document.querySelector('.snap');
+const redShift = document.querySelector('.redShift');
+const pSplit = document.querySelector('.pSplit');
+const pAlpha = document.querySelector('.pAlpha');
+const noFilterButton = document.querySelector('.noFilter');
 
 function getVideo() {
     const constraints ={
@@ -26,6 +30,7 @@ function getVideo() {
     });
 }
 
+let currentFilter = 'noFilter'
 function paintToCanvas() {
     const width = video.videoWidth;
     const height = video.videoHeight;
@@ -37,12 +42,18 @@ function paintToCanvas() {
         // take pixels out
         let pixels = ctx.getImageData(0, 0, width, height);
         // mess with them
-        // pixels = redEffect(pixels);
-        //pixels = rgbSplit(pixels);
-        pixels = greenScreen(pixels);
+        if (currentFilter = 'redEffect') {
+            pixels = redEffect(pixels);
+        } else if (currentFilter = 'rgbSplit') {
+            pixels = rgbSplit(pixels);
+        } else if (currentFilter = 'greenScreen') {
+            pixels = greenScreen(pixels);
+        } else if (currentFilter = 'noFilter') {
+            pixels = noFilter(pixels);
+        }
         // put them back
         ctx.putImageData(pixels, 0, 0);
-    }, 20);
+    }, 16);
 }
 
 function takePhoto() {
@@ -56,6 +67,16 @@ function takePhoto() {
     link.setAttribute('download', 'capture');
     link.innerHTML = `<img src="${data}" alt="capture"/>`;
     strip.insertBefore(link, strip.firstChild);  
+}
+
+function noFilter(pixels){
+    for(let i = 0; i <pixels.data.length; i+=4) {
+        pixels.data[i +0] = pixels.data[i + 0]; // Red
+        pixels.data[i +1] = pixels.data[i + 1]; // Green
+        pixels.data[i +2] = pixels.data[i + 2]; // Blue
+        pixels.data[i +3] = pixels.data[i + 3]; // Alpha
+    }
+    return pixels
 }
 
 function redEffect(pixels){
@@ -99,6 +120,24 @@ function greenScreen(pixels) {
                 pixels.data[i + 3] = 0;
             }
 }
+
+function addNoFilter(){
+    filters = 'noFilter';
+}
+function addRedShift(){
+    filters = 'redEffect';
+}
+function addPSplit(){
+    filters = 'rgbSplit';
+}
+function addPAlpha(){
+    filters = 'greenScreen';
+}
+
 getVideo();
 
 video.addEventListener('canplay', paintToCanvas);
+redShift.addEventListener('click', addRedShift);
+pSplit.addEventListener('click', addPSplit);
+pAlpha.addEventListener('click', addPAlpha);
+noFilter.addEventListener('click', addNoFilter);
