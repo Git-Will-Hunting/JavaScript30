@@ -49,7 +49,7 @@ function paintToCanvas() {
         } else if (currentFilter === 'greenScreen') {
             pixels = greenScreen(pixels);
         } else if (currentFilter === 'noFilter') {
-            pixels = noFilter(pixels);
+            pixels = ctx.getImageData(0, 0, width, height)
         }
         // put them back
         ctx.putImageData(pixels, 0, 0);
@@ -67,16 +67,6 @@ function takePhoto() {
     link.setAttribute('download', 'capture');
     link.innerHTML = `<img src="${data}" alt="capture"/>`;
     strip.insertBefore(link, strip.firstChild);  
-}
-
-function noFilter(pixels){
-    for(let i = 0; i <pixels.data.length; i+=4) {
-        pixels.data[i +0] = pixels.data[i + 0]; // Red
-        pixels.data[i +1] = pixels.data[i + 1]; // Green
-        pixels.data[i +2] = pixels.data[i + 2]; // Blue
-        pixels.data[i +3] = pixels.data[i + 3]; // Alpha
-    }
-    return pixels
 }
 
 function redEffect(pixels){
@@ -101,7 +91,7 @@ function greenScreen(pixels) {
     const levels = {};
 
     document.querySelectorAll('.rgb input').forEach((input) => {
-        levels[input.name] = input.ariaValueMax;
+        levels[input.name] = input.value;
     });
 
     for (i = 0; i <pixels.data.length; i+=4) {
@@ -118,8 +108,8 @@ function greenScreen(pixels) {
             && blue >= levels.bmax) {
                 // take it out
                 pixels.data[i + 3] = 0;
-            };
-    };
+            }
+    }
     return pixels;
 }
 
