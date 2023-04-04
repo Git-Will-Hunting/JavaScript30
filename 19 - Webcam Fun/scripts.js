@@ -42,13 +42,13 @@ function paintToCanvas() {
         // take pixels out
         let pixels = ctx.getImageData(0, 0, width, height);
         // mess with them
-        if (currentFilter = 'redEffect') {
+        if (currentFilter === 'redEffect') {
             pixels = redEffect(pixels);
-        } else if (currentFilter = 'rgbSplit') {
+        } else if (currentFilter === 'rgbSplit') {
             pixels = rgbSplit(pixels);
-        } else if (currentFilter = 'greenScreen') {
+        } else if (currentFilter === 'greenScreen') {
             pixels = greenScreen(pixels);
-        } else if (currentFilter = 'noFilter') {
+        } else if (currentFilter === 'noFilter') {
             pixels = noFilter(pixels);
         }
         // put them back
@@ -120,22 +120,23 @@ function greenScreen(pixels) {
                 pixels.data[i + 3] = 0;
             };
     };
+    return pixels;
 }
 
 function addNoFilter(){
-    filters = 'noFilter';
+    currentFilter = 'noFilter';
 }
 
 function addRedShift(){
-    filters = 'redEffect';
+    currentFilter = 'redEffect';
 }
 
 function addPSplit(){
-    filters = 'rgbSplit';
+    currentFilter = 'rgbSplit';
 }
 
 function addPAlpha(){
-    filters = 'greenScreen';
+    currentFilter = 'greenScreen';
 }
 
 getVideo();
