@@ -30,7 +30,9 @@ function getVideo() {
     });
 }
 
+let lastFilter = 'noFilter'
 let currentFilter = 'noFilter'
+
 function paintToCanvas() {
     const width = video.videoWidth;
     const height = video.videoHeight;
@@ -113,7 +115,32 @@ function greenScreen(pixels) {
     return pixels;
 }
 
+function noFilter(pixels, lastFilter) {
+    if (lastFilter === 'redEffect') {
+        // Reverse redEffect
+        for(let i = 0; i <pixels.data.length; i+=4) {
+            pixels.data[i +0] = pixels.data[i + 0] - 100; // Red
+            pixels.data[i +1] = pixels.data[i + 1] + 50; // Green
+            pixels.data[i +2] = pixels.data[i + 2] / 0.5; // Blue
+        }
+    } else if (lastFilter === 'rgbSplit') {
+        // Reverse rgbSplit
+        for(let i = 0; i <pixels.data.length; i+=4) {
+            pixels.data[i - 400] = pixels.data[i + 0]; // Red
+            pixels.data[i + 100] = pixels.data[i + 1]; // Green
+            pixels.data[i + 600] = pixels.data[i + 2]; // Blue
+        }
+    } else if (lastFilter === 'greenScreen'){
+        for (i = 0; i <pixels.data.length; i+=4) {
+            pixels.data[i + 3] = 255;
+    }
+}
+return pixels
+}
+
+
 function addNoFilter(){
+    lastFilter = currentFilter;
     currentFilter = 'noFilter';
 }
 
