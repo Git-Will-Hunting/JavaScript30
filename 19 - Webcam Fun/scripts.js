@@ -118,18 +118,22 @@ function greenScreen(pixels) {
             && blue >= levels.bmax) {
                 // take it out
                 pixels.data[i + 3] = 0;
-            }
+            };
+    };
 }
 
 function addNoFilter(){
     filters = 'noFilter';
 }
+
 function addRedShift(){
     filters = 'redEffect';
 }
+
 function addPSplit(){
     filters = 'rgbSplit';
 }
+
 function addPAlpha(){
     filters = 'greenScreen';
 }
