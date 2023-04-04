@@ -163,4 +163,4 @@ video.addEventListener('canplay', paintToCanvas);
 redShift.addEventListener('click', addRedShift);
 pSplit.addEventListener('click', addPSplit);
 pAlpha.addEventListener('click', addPAlpha);
-noFilter.addEventListener('click', addNoFilter);
+noFilterButton.addEventListener('click', addNoFilter);
