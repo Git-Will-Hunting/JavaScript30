@@ -28,6 +28,29 @@
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+    const triggers = document.querySelectorAll('a');
+    const highlight = document.createElement('span');
+    highlight.classList.add('highlight');
+    document.body.append(highlight);
+
+    function highlightLink() {
+      // get absolute position of the link coordinates
+      const linkCoords = this.getBoundingClientRect();
+      // adjust link coordinates for vertical/horizontal scroll
+      const coords = {
+        width: linkCoords.width,
+        height: linkCoords.height,
+        top: linkCoords.top + window.scrollY,
+        left: linkCoords.left + window.scrollX
+      };
+      // set highlight to match the bounding rectangle of element
+      highlight.style.width = `${coords.width}px`;
+      highlight.style.height = `${coords.height}px`;
+      // set position of highlight to match the position of the element
+      highlight.style.transform = `translate(${coords.left}px, ${coords.top}px)`
+    }
+
+    triggers.forEach(a => a.addEventListener('mouseenter', highlightLink));
   </script>
 </body>
 </html>
