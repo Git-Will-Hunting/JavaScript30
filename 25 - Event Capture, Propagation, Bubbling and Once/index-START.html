@@ -39,11 +39,38 @@
   .three {
     background: coral;
   }
+  button {
+    width: 100px;
+    height: 50px;
+  }
 </style>
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
 
+  function logText(e) {
+    console.log(this.classList.value);
+    // e.stopPropagation(); // stop bubbling  
+  }
+  
+  //document.body.addEventListener('click', logText);
+  
+  divs.forEach(div => div.addEventListener('click', logText, {
+    // capture: true reverses the propogation of events
+    // this is because it logs on the way down instead of up
+    capture: false,
+    once: false
+    }));
+  
+  // once can be used to run the event once and unbind it
+  // unbinding the event prevents it from running again
+  button.addEventListener('click', () => {
+    console.log('clicked!');
+  }, {
+    once: true
+  })
 </script>
 </body>
 </html>
