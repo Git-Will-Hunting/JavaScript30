@@ -65,9 +65,10 @@
 
     navigator.geolocation.watchPosition((data) => {
       console.log(data);
-      speed.textContent = data.coords.speed;
+      speed.textContent = Math.round((data.coords.speed + Number.EPSILON) * 1000) / 1000;
       arrow.style.transform = `rotate(${data.coords.heading}deg)`;
     }, (err) => {
+      console.error(err)
       alert("Hey! You'll need to share location to use this!")
     })
 
